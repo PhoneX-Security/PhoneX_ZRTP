@@ -33,6 +33,10 @@
 #include <libzrtpcpp/ZIDCache.h>
 #include <libzrtpcpp/Base32.h>
 
+#ifndef DEBUG_TAG
+#define DEBUG_TAG "zrtpcpp"
+#endif
+
 using namespace GnuZrtpCodes;
 
 /* disabled...but used in testing and debugging, probably should have a
@@ -231,6 +235,7 @@ void ZRtp::startZrtpEngine() {
     Event_t ev;
 
     if (stateEngine != NULL && stateEngine->inState(Initial)) {
+    	LOGD(this, "zrtpEngine starting, process event");
         ev.type = ZrtpInitial;
         stateEngine->processEvent(&ev);
     }
@@ -240,6 +245,8 @@ void ZRtp::stopZrtp() {
     Event_t ev;
 
     if (stateEngine != NULL) {
+    	LOGD(this, "zrtpEngine stop!");
+
         ev.type = ZrtpClose;
         stateEngine->processEvent(&ev);
     }
@@ -269,6 +276,7 @@ ZrtpPacketHelloAck* ZRtp::prepareHelloAck() {
  * to break this tie.
  */
 ZrtpPacketCommit* ZRtp::prepareCommit(ZrtpPacketHello *hello, uint32_t* errMsg) {
+	LOGD(this, "zrtp prepare commit");
 
     if (!hello->isLengthOk()) {
         *errMsg = CriticalSWError;
@@ -469,6 +477,7 @@ ZrtpPacketCommit* ZRtp::prepareCommitMultiStream(ZrtpPacketHello *hello) {
  * hash SHA context
  */
 ZrtpPacketDHPart* ZRtp::prepareDHPart1(ZrtpPacketCommit *commit, uint32_t* errMsg) {
+	LOGD(this, "prepare part DH1");
 
     sendInfo(Info, InfoRespCommitReceived);
 
@@ -616,7 +625,7 @@ ZrtpPacketDHPart* ZRtp::prepareDHPart1(ZrtpPacketCommit *commit, uint32_t* errMs
 ZrtpPacketDHPart* ZRtp::prepareDHPart2(ZrtpPacketDHPart *dhPart1, uint32_t* errMsg) {
 
     uint8_t* pvr;
-
+    LOGD(this, "prepare part dh2");
     sendInfo(Info, InfoInitDH1Received);
 
     if (!dhPart1->isLengthOk()) {
@@ -692,7 +701,7 @@ ZrtpPacketDHPart* ZRtp::prepareDHPart2(ZrtpPacketDHPart *dhPart1, uint32_t* errM
 ZrtpPacketConfirm* ZRtp::prepareConfirm1(ZrtpPacketDHPart* dhPart2, uint32_t* errMsg) {
 
     uint8_t* pvi;
-
+    LOGD(this, "prepare confirm");
     sendInfo(Info, InfoRespDH2Received);
 
     if (!dhPart2->isLengthOk()) {
@@ -911,7 +920,7 @@ ZrtpPacketConfirm* ZRtp::prepareConfirm1MultiStream(ZrtpPacketCommit* commit, ui
  * At this point we are Initiator.
  */
 ZrtpPacketConfirm* ZRtp::prepareConfirm2(ZrtpPacketConfirm* confirm1, uint32_t* errMsg) {
-
+	LOGD(this, "zrtpEngine prepare confirm 2(initiator)");
     sendInfo(Info, InfoInitConf1Received);
 
     if (!confirm1->isLengthOk()) {
@@ -1746,7 +1755,7 @@ void ZRtp::generateKeysInitiator(ZrtpPacketDHPart *dhPart, ZIDRecord *zidRec) {
     */
     // check if we have a matching PBX secret and place it third (s3)
     if (memcmp(pbxSecretIDr, dhPart->getPbxSecretId(), HMAC_SIZE) == 0) {
-        DEBUGOUT((fprintf(stdout, "%c: Match for Other_secret found\n", zid[0])));
+        DEBUGOUT((fprintf(stdout, "%c: Match for Other_secret found\n", '0')));
         setD[2] = zidRec->getMiTMData();
         detailInfo.secretsMatched |= Pbx;
         detailInfo.secretsMatchedDH |= Pbx;
