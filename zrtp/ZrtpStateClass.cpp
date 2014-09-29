@@ -80,7 +80,17 @@ void ZrtpStateClass::processEvent(Event_t *ev) {
     char *msg, first, middle, last;
     uint8_t *pkt;
 
-    parent->synchEnter();
+
+    // Try to avoid deadlocks (recv msg -> wait lock; timer -> lock, send -> send thread waits)
+    int32_t lock = parent->synchTryEnter();
+
+    // Old school way of doing this - pure mutex
+    //int32_t lock = 1;
+    //parent->synchEnter();
+
+    if (lock==0){
+    	return;
+    }
 
     event = ev;
     if (event->type == ZrtpPacket) {
