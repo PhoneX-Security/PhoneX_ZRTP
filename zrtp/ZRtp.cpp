@@ -2298,8 +2298,23 @@ void ZRtp::synchEnter() {
     callback->synchEnter();
 }
 
+int32_t ZRtp::synchTryEnter() {
+    return callback->synchTryEnter();
+}
+
 void ZRtp::synchLeave() {
     callback->synchLeave();
+}
+
+void ZRtp::log(uint severity, const char *obj, const char *fmt, ...){
+    va_list arg;
+    va_start(arg, fmt);
+    callback->vlog(severity, obj, fmt, arg);
+    va_end(arg);
+}
+
+void ZRtp::vlog(uint severity, const char *obj, const char *fmt, va_list argp){
+    callback->vlog(severity, obj, fmt, argp);
 }
 
 int32_t ZRtp::sendPacketZRTP(ZrtpPacketBase *packet) {

@@ -26,6 +26,23 @@
 
 #include <cstdlib>
 
+#define ZRTPDEBUG
+
+#ifdef ZRTPDEBUG
+#define LOGV(zobj, ...) do { zobj->log(5, DEBUG_TAG, __VA_ARGS__); } while(false)
+#define LOGD(zobj, ...) do { zobj->log(4, DEBUG_TAG, __VA_ARGS__); } while(false)
+#define LOGI(zobj, ...) do { zobj->log(3, DEBUG_TAG, __VA_ARGS__); } while(false)
+#define LOGW(zobj, ...) do { zobj->log(2, DEBUG_TAG, __VA_ARGS__); } while(false)
+#define LOGE(zobj, ...) do { zobj->log(1, DEBUG_TAG, __VA_ARGS__); } while(false)
+#else
+#define  LOGD(zobj, ...)
+#define  LOGI(zobj, ...)
+#define  LOGV(zobj, ...)
+#define  LOGW(zobj, ...)
+#define  LOGE(zobj, ...)
+#endif
+
+
 #include <libzrtpcpp/ZrtpPacketHello.h>
 #include <libzrtpcpp/ZrtpPacketHelloAck.h>
 #include <libzrtpcpp/ZrtpPacketCommit.h>
@@ -846,12 +863,6 @@ private:
     ZIDRecord *zidRec;
 
     /**
-     * Save record
-     * 
-     * If false don't save record until user vrified and confirmed the SAS.
-     */
-    bool saveZidRecord;
-    /**
      * Random IV data to encrypt the confirm data, 128 bit for AES
      */
     uint8_t randomIV[16];
@@ -1360,6 +1371,7 @@ private:
      * synchronization mutex.
      */
     void synchEnter();
+    int32_t synchTryEnter();
 
     void synchLeave();
 
@@ -1409,6 +1421,9 @@ private:
       *     Pointer to hello packet version structure.
       */
      void setClientId(std::string id, HelloPacketVersion* hpv);
+
+     void log(uint severity, const char *obj, const char *fmt, ...);
+     void vlog(uint severity, const char *obj, const char *fmt, va_list argp);
 };
 
 /**

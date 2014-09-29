@@ -556,6 +556,17 @@ extern "C"
          *
          */
         int32_t (*zrtp_checkSASSignature) (ZrtpContext* ctx, uint8_t* sas ) ;
+        
+        /**
+         * Try to enter synchronization mutex.
+         *
+         * @param ctx
+         *    Pointer to the opaque ZrtpContext structure.
+         */
+         int32_t (*zrtp_synchTryEnter)(ZrtpContext* ctx) ;
+
+         void (*zrtp_log)(uint severity, const char *obj, const char *fmt, ...);
+         void (*zrtp_vlog)(uint severity, const char *obj, const char *fmt, va_list argp);
     } zrtp_Callbacks;
 
     /**
@@ -1356,6 +1367,34 @@ extern "C"
      *    Returns true if certificate processing is enabled.
      */
     int32_t zrtp_isSasSignature(ZrtpContext* zrtpContext);
+
+    /**
+	 * @brief This method adds entropy to the PRNG.
+	 *
+	 * An application may seed some entropy data to the PRNG. If the @c buffer is
+	 * @c NULL or the @c length is zero then the method adds at least some system
+	 * entropy.
+	 *
+	 * @param buffer some entropy data to add
+	 *
+	 * @param length length of entropy data in bytes
+	 *
+	 * @return on success: number of entropy bytes added, on failure: -1. Number of
+	 *         bytes added may be bigger then @c length because of added system
+	 *         entropy.
+	 */
+	int zrtp_addEntropy(const uint8_t *buffer, uint32_t length);
+
+	/**
+	 * @brief Get some random data.
+	 *
+	 * @param buffer that will contain the random data
+	 *
+	 * @param length how many bytes of random data to generate
+	 *
+	 * @return the number of generated random data bytes
+	 */
+	int zrtp_getRandomData(uint8_t *buffer, uint32_t length);
 
 #ifdef __cplusplus
 }

@@ -78,6 +78,8 @@ public:
     void synchEnter();
 
     void synchLeave();
+    
+    int32_t synchTryEnter();
 
     void zrtpAskEnrollment (GnuZrtpCodes::InfoEnrollment info );
 
@@ -86,6 +88,9 @@ public:
     void signSAS (uint8_t* sasHash );
 
     bool checkSASSignature (uint8_t* sasHash );
+
+    void log(uint severity, const char *obj, const char *fmt, ...);
+    void vlog(uint severity, const char *obj, const char *fmt, va_list argp);
 
 private:
     void init();

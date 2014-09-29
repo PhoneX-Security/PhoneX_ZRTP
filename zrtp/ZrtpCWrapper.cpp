@@ -24,6 +24,7 @@
 #include <libzrtpcpp/ZrtpCallbackWrapper.h>
 #include <libzrtpcpp/ZrtpCWrapper.h>
 #include <libzrtpcpp/ZrtpCrc32.h>
+#include <crypto/zrtpDH.h>
 
 static int32_t zrtp_initZidFile(const char* zidFilename);
 
@@ -473,4 +474,12 @@ void zrtp_setSasSignature(ZrtpContext* zrtpContext, int32_t yesNo)
 int32_t zrtp_isSasSignature(ZrtpContext* zrtpContext)
 {
     return zrtpContext->configure->isSasSignature() ? 1 : 0;
+}
+
+int zrtp_addEntropy(const uint8_t *buffer, uint32_t length){
+	return addEntropyZRTP(buffer, length);
+}
+
+int zrtp_getRandomData(uint8_t *buffer, uint32_t length){
+	return randomZRTP(buffer, length);
 }

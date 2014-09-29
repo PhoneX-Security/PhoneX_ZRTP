@@ -90,6 +90,14 @@ enum EnableSecurity {
     ForSender   = 2         ///< Enable security for SRTP sender
 };
 
+enum ZRTPLogSeverity {
+    LogError=1,
+    LogWarn=2,
+    LogInfo=3,
+    LogDebug=4,
+    LogVerbose=5
+};
+
 /**
  * This abstract class defines the callback functions required by GNU ZRTP.
  *
@@ -265,6 +273,7 @@ protected:
      * spcific part of its implementation.
      */
     virtual void synchEnter() =0;
+    virtual int32_t synchTryEnter() =0;
 
     /**
      * Leave synchronization mutex.
@@ -341,6 +350,13 @@ protected:
      *
      */
     virtual bool checkSASSignature(uint8_t* sasHash) =0;
+
+    /**
+     * Log messages with ZRTP wrapper
+     */
+    virtual void log(uint severity, const char *obj, const char *fmt, ...) =0;
+    virtual void vlog(uint severity, const char *obj, const char *fmt, va_list argp) =0;
+
 };
 
 #endif // ZRTPCALLBACK

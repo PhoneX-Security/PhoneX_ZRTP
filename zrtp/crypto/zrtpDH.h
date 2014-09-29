@@ -46,7 +46,8 @@
 extern "C"
 {
 #endif
-void randomZRTP(uint8_t *buf, int32_t length);
+int randomZRTP(uint8_t *buf, int32_t length);
+int addEntropyZRTP(const uint8_t *buf, int32_t length);
 #if defined(__cplusplus)
 }
 #endif

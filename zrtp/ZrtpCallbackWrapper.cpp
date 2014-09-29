@@ -121,6 +121,11 @@ void ZrtpCallbackWrapper::synchEnter()
     c_callbacks->zrtp_synchEnter(zrtpCtx);
 }
 
+int32_t ZrtpCallbackWrapper::synchTryEnter()
+{
+    return c_callbacks->zrtp_synchTryEnter(zrtpCtx);
+}
+
 
 void ZrtpCallbackWrapper::synchLeave()
 {
@@ -148,4 +153,15 @@ bool ZrtpCallbackWrapper::checkSASSignature(uint8_t* sasHash)
     bool retval = (c_callbacks->zrtp_checkSASSignature(zrtpCtx, sasHash) == 0) ? false : true;
 
     return retval;
+}
+
+void ZrtpCallbackWrapper::log(uint severity, const char *obj, const char *fmt, ...){
+    va_list argp;
+    va_start(argp, fmt);
+    c_callbacks->zrtp_vlog(severity, obj, fmt, argp);
+    va_end(argp);
+}
+
+void ZrtpCallbackWrapper::vlog(uint severity, const char *obj, const char *fmt, va_list argp){
+    c_callbacks->zrtp_vlog(severity, obj, fmt, argp);
 }

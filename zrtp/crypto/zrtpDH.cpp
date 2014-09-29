@@ -66,9 +66,14 @@ typedef struct _dhCtx {
     EcPoint pubPoint;
 } dhCtx;
 
-void randomZRTP(uint8_t *buf, int32_t length)
+int randomZRTP(uint8_t *buf, int32_t length)
 {
-    ZrtpRandom::getRandomData(buf, length);
+    return ZrtpRandom::getRandomData(buf, length);
+}
+
+int addEntropyZRTP(const uint8_t *buf, int32_t length)
+{
+    return ZrtpRandom::addEntropy(buf, length);
 }
 
 static const uint8_t P2048[] =

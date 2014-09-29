@@ -61,10 +61,17 @@ static BIGNUM* bnP3072MinusOne = NULL;
 
 static uint8_t dhinit = 0;
 
-void randomZRTP(uint8_t *buf, int32_t length)
+int randomZRTP(uint8_t *buf, int32_t length)
 {
 //    initializeOpenSSL();
-    RAND_bytes(buf, length);
+    return RAND_bytes(buf, length);
+}
+
+int addEntropyZRTP(const uint8_t *buf, int32_t length)
+{
+//    initializeOpenSSL();
+	RAND_add(buf, length, 0.0);
+	return 1;
 }
 
 static const uint8_t P2048[] =
