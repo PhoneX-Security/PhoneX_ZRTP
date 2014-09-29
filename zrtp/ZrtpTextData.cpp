@@ -78,7 +78,7 @@ char aes1[] = "AES1";
 char two3[] = "2FS3";
 char two2[] = "2FS2";
 char two1[] = "2FS1";
-const char* mandatoryCipher = aes1;
+const char* mandatoryCipher = aes3;
 
 char dh2k[] = "DH2k";
 char ec25[] = "EC25";

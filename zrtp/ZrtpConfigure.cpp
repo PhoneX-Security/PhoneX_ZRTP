@@ -210,8 +210,8 @@ void ZrtpConfigure::setStandardConfig() {
 
     addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName(two3));
     addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName(aes3));
-    addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName(two1));
-    addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName(aes1));
+    //addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName(two1));
+    //addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName(aes1));
 
     addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName(ec25));
     addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName(dh3k));
@@ -221,18 +221,18 @@ void ZrtpConfigure::setStandardConfig() {
 
     addAlgo(SasType, zrtpSasTypes.getByName(b32));
 
-    addAlgo(AuthLength, zrtpAuthLengths.getByName(sk32));
+    //addAlgo(AuthLength, zrtpAuthLengths.getByName(sk32));
     addAlgo(AuthLength, zrtpAuthLengths.getByName(sk64));
-    addAlgo(AuthLength, zrtpAuthLengths.getByName(hs32));
+    //addAlgo(AuthLength, zrtpAuthLengths.getByName(hs32));
     addAlgo(AuthLength, zrtpAuthLengths.getByName(hs80));
 }
 
 void ZrtpConfigure::setMandatoryOnly() {
     clear();
 
-    addAlgo(HashAlgorithm, zrtpHashes.getByName(s256));
+    addAlgo(HashAlgorithm, zrtpHashes.getByName(mandatoryHash));
 
-    addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName(aes1));
+    addAlgo(CipherAlgorithm, zrtpSymCiphers.getByName(mandatoryCipher));
 
     addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName(dh3k));
     addAlgo(PubKeyAlgorithm, zrtpPubKeys.getByName(mult));

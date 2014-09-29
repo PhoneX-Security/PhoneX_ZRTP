@@ -1389,7 +1389,7 @@ AlgorithmEnum* ZRtp::findBestCipher(ZrtpPacketHello *hello, AlgorithmEnum* pk) {
 
     int num = hello->getNumCiphers();
     if (num == 0 || (*(int32_t*)(pk->getName()) == *(int32_t*)dh2k)) {
-        return &zrtpSymCiphers.getByName(aes1);
+        return &zrtpSymCiphers.getByName(mandatoryCipher);
     }
 
     // Build list of configured cipher algorithm names.
