@@ -480,6 +480,6 @@ int zrtp_addEntropy(const uint8_t *buffer, uint32_t length){
 	return addEntropyZRTP(buffer, length);
 }
 
-int zrtp_getRandomData(uint8_t *buffer, uint32_t length){
+int zrtp_genRandomData(uint8_t *buffer, uint32_t length){
 	return randomZRTP(buffer, length);
 }

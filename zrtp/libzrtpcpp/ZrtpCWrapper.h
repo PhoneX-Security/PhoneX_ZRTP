@@ -1395,7 +1395,7 @@ extern "C"
 	 *
 	 * @return the number of generated random data bytes
 	 */
-	int zrtp_getRandomData(uint8_t *buffer, uint32_t length);
+    int zrtp_genRandomData(uint8_t *buffer, uint32_t length);
 
 #ifdef __cplusplus
 }
