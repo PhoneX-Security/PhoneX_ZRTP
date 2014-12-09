@@ -155,13 +155,13 @@ bool ZrtpCallbackWrapper::checkSASSignature(uint8_t* sasHash)
     return retval;
 }
 
-void ZrtpCallbackWrapper::log(uint severity, const char *obj, const char *fmt, ...){
+void ZrtpCallbackWrapper::log(uint8_t severity, const char *obj, const char *fmt, ...){
     va_list argp;
     va_start(argp, fmt);
     c_callbacks->zrtp_vlog(severity, obj, fmt, argp);
     va_end(argp);
 }
 
-void ZrtpCallbackWrapper::vlog(uint severity, const char *obj, const char *fmt, va_list argp){
+void ZrtpCallbackWrapper::vlog(uint8_t severity, const char *obj, const char *fmt, va_list argp){
     c_callbacks->zrtp_vlog(severity, obj, fmt, argp);
 }

@@ -36,6 +36,7 @@
  */
 
 #include <stdint.h>
+#include <stdarg.h>
 
 /**
  * Defines to specify the role a ZRTP peer has.
@@ -565,8 +566,8 @@ extern "C"
          */
          int32_t (*zrtp_synchTryEnter)(ZrtpContext* ctx) ;
 
-         void (*zrtp_log)(uint severity, const char *obj, const char *fmt, ...);
-         void (*zrtp_vlog)(uint severity, const char *obj, const char *fmt, va_list argp);
+         void (*zrtp_log)(uint8_t severity, const char *obj, const char *fmt, ...);
+         void (*zrtp_vlog)(uint8_t severity, const char *obj, const char *fmt, va_list argp);
     } zrtp_Callbacks;
 
     /**

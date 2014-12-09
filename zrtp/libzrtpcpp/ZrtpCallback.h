@@ -354,8 +354,8 @@ protected:
     /**
      * Log messages with ZRTP wrapper
      */
-    virtual void log(uint severity, const char *obj, const char *fmt, ...) =0;
-    virtual void vlog(uint severity, const char *obj, const char *fmt, va_list argp) =0;
+    virtual void log(uint8_t severity, const char *obj, const char *fmt, ...) =0;
+    virtual void vlog(uint8_t severity, const char *obj, const char *fmt, va_list argp) =0;
 
 };
 

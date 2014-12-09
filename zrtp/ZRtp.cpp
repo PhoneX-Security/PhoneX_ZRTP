@@ -2315,14 +2315,14 @@ void ZRtp::synchLeave() {
     callback->synchLeave();
 }
 
-void ZRtp::log(uint severity, const char *obj, const char *fmt, ...){
+void ZRtp::log(uint8_t severity, const char *obj, const char *fmt, ...){
     va_list arg;
     va_start(arg, fmt);
     callback->vlog(severity, obj, fmt, arg);
     va_end(arg);
 }
 
-void ZRtp::vlog(uint severity, const char *obj, const char *fmt, va_list argp){
+void ZRtp::vlog(uint8_t severity, const char *obj, const char *fmt, va_list argp){
     callback->vlog(severity, obj, fmt, argp);
 }
 

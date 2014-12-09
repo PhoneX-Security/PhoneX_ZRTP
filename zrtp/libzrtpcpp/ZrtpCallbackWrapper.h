@@ -89,8 +89,8 @@ public:
 
     bool checkSASSignature (uint8_t* sasHash );
 
-    void log(uint severity, const char *obj, const char *fmt, ...);
-    void vlog(uint severity, const char *obj, const char *fmt, va_list argp);
+    void log(uint8_t severity, const char *obj, const char *fmt, ...);
+    void vlog(uint8_t severity, const char *obj, const char *fmt, va_list argp);
 
 private:
     void init();
